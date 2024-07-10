@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ParticipantRepository extends JpaRepository<Participant, UUID> {
-    public List<Participant> findByTripId(UUID tripId);
+    List<Participant> findByTripId(UUID tripId);
 }

@@ -16,7 +16,8 @@ public class ParticipantService {
     public void registerParticipantsToEvent(List<String> participantsToInvite, Trip trip){
         List<Participant> participants = participantsToInvite.stream().map(email -> new Participant(email, trip)).toList();
         this.repository.saveAll(participants);
-        System.out.println(participants.getFirst().getId());
+        // Id do participante sendo impresso no terminal
+        // System.out.println(participants.getFirst().getId());
     }
 
     public ParticipantCreateResponse registerParticipantToEvent(String email, Trip trip){
@@ -26,11 +27,11 @@ public class ParticipantService {
     }
 
     public void triggerConfirmationEmailToParticipants(UUID tripId){
-
+        // Feature a ser implementada
     }
 
     public void triggerConfirmationEmailToParticipant(String email){
-
+        // Feature a ser implementada
     }
 
     public List<ParticipantData> getAllParticipantsFromEvent(UUID tripId) {

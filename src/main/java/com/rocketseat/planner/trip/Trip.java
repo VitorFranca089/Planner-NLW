@@ -27,6 +27,7 @@ public class Trip {
     @Column(name = "starts_at", nullable = false)
     private LocalDateTime startsAt;
 
+    // Validação de data: Sempre deve ser uma data posterior ao starts_at
     @Column(name = "ends_at",nullable = false)
     private LocalDateTime endsAt;
 
