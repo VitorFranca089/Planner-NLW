@@ -5,6 +5,9 @@ import com.rocketseat.planner.activity.ActivityRequestPayload;
 import com.rocketseat.planner.activity.ActivityResponse;
 import com.rocketseat.planner.activity.ActivityService;
 import com.rocketseat.planner.link.LinkService;
+import com.rocketseat.planner.participant.ParticipantCreateResponse;
+import com.rocketseat.planner.participant.ParticipantData;
+import com.rocketseat.planner.participant.ParticipantRequestPayload;
 import com.rocketseat.planner.participant.ParticipantService;
 import com.rocketseat.planner.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +86,38 @@ public class TripService {
 
     public List<ActivityData> getAllActivities(UUID tripId){
         return this.activityService.getAllActivitiesFromId(tripId);
+    }
+
+    // Participants
+    public ParticipantCreateResponse registerParticipant(UUID tripId, ParticipantRequestPayload payload){
+        Optional<Trip> trip = this.repository.findById(tripId);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            ParticipantCreateResponse participantCreateResponse = this.participantService.registerParticipantToEvent(payload.email(), rawTrip);
+            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email());
+            return participantCreateResponse;
+        }
+        return null;
+    }
+
+    public ParticipantCreateResponse inviteParticipant(UUID tripId, ParticipantRequestPayload payload){
+        Optional<Trip> trip = this.repository.findById(tripId);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            ParticipantCreateResponse participantCreateResponse = this.participantService.registerParticipantToEvent(payload.email(), rawTrip);
+            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email());
+            return participantCreateResponse;
+        }
+        return null;
+    }
+
+    public List<ParticipantData> getAllParticipants(UUID tripId){
+        Optional<Trip> trip = this.repository.findById(tripId);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            return this.participantService.getAllParticipantsFromEvent(rawTrip.getId());
+        }
+        return null;
     }
 
 }
