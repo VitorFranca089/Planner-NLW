@@ -81,4 +81,8 @@ public class TripService {
         return null;
     }
 
+    public List<ActivityData> getAllActivities(UUID tripId){
+        return this.activityService.getAllActivitiesFromId(tripId);
+    }
+
 }

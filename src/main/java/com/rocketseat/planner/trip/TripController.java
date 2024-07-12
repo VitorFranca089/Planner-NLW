@@ -86,7 +86,7 @@ public class TripController {
 
     @GetMapping("/{id}/activities")
     public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id){
-        List<ActivityData> activityDataList = this.activityService.getAllActivitiesFromId(id);
+        List<ActivityData> activityDataList = this.tripService.getAllActivities(id);
         return ResponseEntity.ok(activityDataList);
     }
 
