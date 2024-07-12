@@ -4,6 +4,9 @@ import com.rocketseat.planner.activity.ActivityData;
 import com.rocketseat.planner.activity.ActivityRequestPayload;
 import com.rocketseat.planner.activity.ActivityResponse;
 import com.rocketseat.planner.activity.ActivityService;
+import com.rocketseat.planner.link.LinkData;
+import com.rocketseat.planner.link.LinkRequestPayload;
+import com.rocketseat.planner.link.LinkResponse;
 import com.rocketseat.planner.link.LinkService;
 import com.rocketseat.planner.participant.ParticipantCreateResponse;
 import com.rocketseat.planner.participant.ParticipantData;
@@ -118,6 +121,20 @@ public class TripService {
             return this.participantService.getAllParticipantsFromEvent(rawTrip.getId());
         }
         return null;
+    }
+
+    // Links
+    public LinkResponse registerLink(UUID tripId, LinkRequestPayload payload){
+        Optional<Trip> trip = this.repository.findById(tripId);
+        if(trip.isPresent()){
+            Trip rawTrip = trip.get();
+            return this.linkService.registerLink(payload, rawTrip);
+        }
+        return null;
+    }
+
+    public List<LinkData> getAllLinks(UUID tripId){
+        return this.linkService.getAllLinksFromId(tripId);
     }
 
 }
