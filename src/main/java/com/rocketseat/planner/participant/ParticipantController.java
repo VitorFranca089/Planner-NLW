@@ -1,11 +1,9 @@
 package com.rocketseat.planner.participant;
 
-import com.rocketseat.planner.trip.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -13,21 +11,15 @@ import java.util.UUID;
 public class ParticipantController {
 
     @Autowired
-    private ParticipantRepository repository;
+    private ParticipantService participantService;
 
     @PostMapping("/{id}/confirm")
-    public ResponseEntity<Participant> confirmParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload){
-        Optional<Participant> participant = this.repository.findById(id);
-
-        if(participant.isPresent()){
-            Participant rawParticipant = participant.get();
-            rawParticipant.setIsConfirmed(true);
-            rawParticipant.setName(payload.name());
-            this.repository.save(rawParticipant);
-            return ResponseEntity.ok(rawParticipant);
-        }else{
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<ParticipantResponseConfirm> confirmParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload){
+        ParticipantResponseConfirm participantResponseConfirm = this.participantService.confirmParticipant(id, payload);
+        if(participantResponseConfirm != null){
+            return ResponseEntity.ok(participantResponseConfirm);
         }
+        return ResponseEntity.notFound().build();
     }
 
 }
