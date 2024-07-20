@@ -9,6 +9,7 @@ import com.rocketseat.planner.link.LinkResponse;
 import com.rocketseat.planner.participant.ParticipantCreateResponse;
 import com.rocketseat.planner.participant.ParticipantData;
 import com.rocketseat.planner.participant.ParticipantRequestPayload;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class TripController {
 
     // Trips
     @PostMapping
-    public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripRequestPayload payload){
+    public ResponseEntity<TripCreateResponse> createTrip(@RequestBody @Valid TripRequestPayload payload){
         TripCreateResponse tripCreateResponse = this.tripService.createTrip(payload);
         return ResponseEntity.ok(tripCreateResponse);
     }
@@ -41,8 +42,9 @@ public class TripController {
         return ResponseEntity.notFound().build();
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<TripData> updateTrip(@PathVariable UUID id, @RequestBody TripRequestPayload payload){
+    public ResponseEntity<TripData> updateTrip(@PathVariable UUID id, @RequestBody @Valid TripRequestPayload payload){
         TripData tripData = this.tripService.updateTrip(id, payload);
         if(tripData != null){
             return ResponseEntity.ok(tripData);

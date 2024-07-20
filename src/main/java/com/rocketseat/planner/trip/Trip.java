@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity
@@ -27,17 +26,16 @@ public class Trip {
     @Column(name = "starts_at", nullable = false)
     private LocalDateTime startsAt;
 
-    // Validação de data: Sempre deve ser uma data posterior ao starts_at
     @Column(name = "ends_at",nullable = false)
     private LocalDateTime endsAt;
 
     @Column(name = "is_confirmed",nullable = false)
     private Boolean isConfirmed;
 
-    @Column(name = "owner_name",nullable = false)
+    @Column(name = "owner_name", nullable = false)
     private String ownerName;
 
-    @Column(name = "owner_email",nullable = false)
+    @Column(name = "owner_email", nullable = false)
     private String ownerEmail;
 
     public Trip(TripRequestPayload data){
@@ -45,8 +43,8 @@ public class Trip {
         this.isConfirmed = false;
         this.ownerName = data.owner_name();
         this.ownerEmail = data.owner_email();
-        this.startsAt = LocalDateTime.parse(data.starts_at(), DateTimeFormatter.ISO_DATE_TIME);
-        this.endsAt = LocalDateTime.parse(data.ends_at(), DateTimeFormatter.ISO_DATE_TIME);
+        this.startsAt = data.starts_at();
+        this.endsAt = data.ends_at();
     }
 
 }

@@ -12,7 +12,6 @@ import com.rocketseat.planner.participant.ParticipantCreateResponse;
 import com.rocketseat.planner.participant.ParticipantData;
 import com.rocketseat.planner.participant.ParticipantRequestPayload;
 import com.rocketseat.planner.participant.ParticipantService;
-import com.rocketseat.planner.util.LocalDateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,8 +55,8 @@ public class TripService {
         Optional<Trip> trip = this.repository.findById(tripId);
         if(trip.isPresent()){
             Trip rawTrip = trip.get();
-            rawTrip.setStartsAt(LocalDateTimeUtils.stringToLocalDateTime(payload.starts_at()));
-            rawTrip.setEndsAt(LocalDateTimeUtils.stringToLocalDateTime(payload.ends_at()));
+            rawTrip.setStartsAt(payload.starts_at());
+            rawTrip.setEndsAt(payload.ends_at());
             rawTrip.setDestination(payload.destination());
             this.repository.save(rawTrip);
             return new TripData(rawTrip);
