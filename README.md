@@ -17,8 +17,8 @@ O Plann.er é uma API para um aplicativo gerenciador de viagens, projetado para 
 ## 🔲 Funcionalidades Futuras
 
 - [x] Extração do core das trips pra dentro de uma classe Service.
-- [ ] Validação nos campos de data.
-- [ ] Mapeamento das exceções da aplicação.
+- [x] Validação nos campos de data.
+- [x] Mapeamento das exceções da aplicação.
 - [ ] Criação de um serviço de envio efetivo de emails.
 - [ ] Adicionar Swagger para documentação da API.
 
