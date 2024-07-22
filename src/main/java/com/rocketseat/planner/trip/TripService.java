@@ -4,7 +4,7 @@ import com.rocketseat.planner.activity.ActivityData;
 import com.rocketseat.planner.activity.ActivityRequestPayload;
 import com.rocketseat.planner.activity.ActivityResponse;
 import com.rocketseat.planner.activity.ActivityService;
-import com.rocketseat.planner.exception.ActivityDateOutOfBoundsException;
+import com.rocketseat.planner.exception.DateOutOfBoundsException;
 import com.rocketseat.planner.link.LinkData;
 import com.rocketseat.planner.link.LinkRequestPayload;
 import com.rocketseat.planner.link.LinkResponse;
@@ -82,11 +82,9 @@ public class TripService {
         Optional<Trip> trip = this.repository.findById(tripId);
         if(trip.isPresent()){
             Trip rawTrip = trip.get();
-
             if(payload.occurs_at().isBefore(rawTrip.getStartsAt()) || payload.occurs_at().isAfter(rawTrip.getEndsAt())){
-                throw new ActivityDateOutOfBoundsException();
+                throw new DateOutOfBoundsException();
             }
-
             return this.activityService.registerActivity(payload, rawTrip);
         }
         return null;
