@@ -99,8 +99,9 @@ public class TripService {
         Optional<Trip> trip = this.repository.findById(tripId);
         if(trip.isPresent()){
             Trip rawTrip = trip.get();
+            TripData tripData = new TripData(rawTrip);
             ParticipantCreateResponse participantCreateResponse = this.participantService.registerParticipantToEvent(payload.email(), rawTrip);
-            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email());
+            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email(), tripData, participantCreateResponse.id());
             return participantCreateResponse;
         }
         return null;
@@ -110,8 +111,9 @@ public class TripService {
         Optional<Trip> trip = this.repository.findById(tripId);
         if(trip.isPresent()){
             Trip rawTrip = trip.get();
+            TripData tripData = new TripData(rawTrip);
             ParticipantCreateResponse participantCreateResponse = this.participantService.registerParticipantToEvent(payload.email(), rawTrip);
-            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email());
+            if(rawTrip.getIsConfirmed()) this.participantService.triggerConfirmationEmailToParticipant(payload.email(), tripData, participantCreateResponse.id());
             return participantCreateResponse;
         }
         return null;
